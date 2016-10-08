@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AlbumDetails {
 	private String albumArtPath;
-	private List<String> albumSongList;
+	private List<Songs> albumSongList;
 	
 	public String getAlbumArtPath() {
 		return albumArtPath;
@@ -21,11 +21,11 @@ public class AlbumDetails {
 		this.albumArtPath = albumArtPath;
 	}
 
-	public List<String> getAlbumSongList() {
+	public List<Songs> getAlbumSongList() {
 		return albumSongList;
 	}
 
-	public void setAlbumSongList(List<String> albumSongList) {
+	public void setAlbumSongList(List<Songs> albumSongList) {
 		this.albumSongList = albumSongList;
 	}
 

@@ -1,6 +1,7 @@
 package com.dheeraj.service;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,9 +39,8 @@ public class RestService {
 	@Path("/getSongDetails/{albumName}/{songName}")
 	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	public Response getSongDetails(@PathParam("albumName") String albumName,  @PathParam("songName") String songName) throws UnsupportedTagException, InvalidDataException, IOException, AlbumNotFoundException{
-		System.out.println(songName);
 		SongsService songService = new SongsService();
-		return Response.status(Response.Status.OK).entity(songService.getSongAlbumContent(songName,albumName)).build();
+		return Response.status(Response.Status.OK).entity(songService.getSongAlbumContent(URLDecoder.decode(songName),albumName)).build();
 	}
 	
 }

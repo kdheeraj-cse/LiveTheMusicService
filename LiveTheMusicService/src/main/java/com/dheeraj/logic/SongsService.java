@@ -43,10 +43,10 @@ public class SongsService {
 		AlbumDetails albumdetails = new AlbumDetails();
 		String absoluteAlbumPath = properties.getProperty("Location_SongRepo")+"/"+albumName;
 		String [] albumFolderContent = new File(absoluteAlbumPath).list();
-		List<String> albumSongList = new ArrayList<>();
+		List<Songs> albumSongList = new ArrayList<>();
 		for (String string : albumFolderContent) {
 			if(string.endsWith(SongsService.MP3EXTENSION)){
-				albumSongList.add(getTrackName(absoluteAlbumPath+"/"+string));
+				albumSongList.add(getSongAlbumContent(string, albumName));
 			}else{
 				albumdetails.setAlbumArtPath(string);
 			}
@@ -54,12 +54,6 @@ public class SongsService {
 		albumdetails.setAlbumSongList(albumSongList);
 		return albumdetails;
 	}
-	
-	private String getTrackName(String mp3FileName) throws UnsupportedTagException, InvalidDataException, IOException{
-		Mp3File mp3File = new Mp3File(mp3FileName);
-		return mp3File.getId3v1Tag().getTitle();
-	}
-	
 	
 	public Songs getSongAlbumContent(String songName,String albumName) throws UnsupportedTagException, InvalidDataException, IOException, AlbumNotFoundException {
 		String songAbsolutePath = properties.getProperty("Location_SongRepo")+"/"+albumName+"/"+songName;
@@ -71,7 +65,7 @@ public class SongsService {
 		
 		File songFile = new File(songAbsolutePath);
 		if(!songFile.exists()){
-			throw new AlbumNotFoundException(properties.getProperty("Album_not_found_exception_message"));
+			throw new AlbumNotFoundException(properties.getProperty("Album_not_found_exception_message")+"at path "+songFile.getAbsolutePath());
 		}
 		Mp3File file = new Mp3File(songAbsolutePath);
 		song.setBitrate(file.getBitrate());
